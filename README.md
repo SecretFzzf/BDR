@@ -1,45 +1,45 @@
-# Impute-then-Forecast 实证研究
+# An Empirical Study of Impute-then-Forecast
 
-本仓库研究时间序列的 impute-then-forecast 两步流水线：先插补缺失值，再进行多步预测，并使用传递效率指标 `τ` 分析插补误差与预测误差之间的关系。实验使用 ETTh1、KDD-Beijing、Weather 和 SWaT，覆盖 MCAR、MAR_Block、MNAR 三种缺失机制，缺失率为 10%、30%、50%、70%；插补方法包括 Mean、Spline、KNN、BRITS、SAITS，预测模型为 LSTM、DLinear 和 PatchTST。
+This repository studies a two-stage impute-then-forecast pipeline for time-series data: missing values are first imputed, followed by multi-step forecasting. The transfer-efficiency metric `tau` is used to analyze the relationship between imputation error and forecasting error. The experiments use ETTh1, KDD-Beijing, Weather, and SWaT; cover the MCAR, MAR_Block, and MNAR missingness mechanisms with missing rates of 10%, 30%, 50%, and 70%; use Mean, Spline, KNN, BRITS, and SAITS for imputation; and use LSTM, DLinear, and PatchTST for forecasting.
 
-## 仓库结构
+## Repository Structure
 
-| 路径 | 说明 |
+| Path | Description |
 |---|---|
-| `data_and_code/ETT/` | ETTh1 主实验 |
-| `data_and_code/ETT_seed123/` | ETTh1 随机种子 123 实验 |
-| `data_and_code/ETT_seed2026/` | ETTh1 随机种子 2026 实验 |
-| `data_and_code/KDD-Beijing/` | KDD-Beijing 主实验 |
-| `data_and_code/weather/` | Weather 主实验 |
-| `data_and_code/SWaT/` | SWaT 主实验 |
-| `data_and_code/SWaT_seed123/` | SWaT 随机种子 123 实验 |
-| `data_and_code/SWaT_seed2026/` | SWaT 随机种子 2026 实验 |
-| `photo/` | 论文图生成脚本及已生成的 PNG 图片 |
+| `data_and_code/ETT/` | Main ETTh1 experiments |
+| `data_and_code/ETT_seed123/` | ETTh1 experiments with random seed 123 |
+| `data_and_code/ETT_seed2026/` | ETTh1 experiments with random seed 2026 |
+| `data_and_code/KDD-Beijing/` | Main KDD-Beijing experiments |
+| `data_and_code/weather/` | Main Weather experiments |
+| `data_and_code/SWaT/` | Main SWaT experiments |
+| `data_and_code/SWaT_seed123/` | SWaT experiments with random seed 123 |
+| `data_and_code/SWaT_seed2026/` | SWaT experiments with random seed 2026 |
+| `photo/` | Paper-figure scripts and generated PNG figures |
 
-每个实验目录包含 `engine.py`、`tool.py`、`run_all_models.py`、`run_LSTM.py`、`run_DLinear.py` 和 `run_PatchTST.py`。其中 `engine.py` 负责训练与评估，`tool.py` 负责缺失注入和插补，`run_all_models.py` 依次运行三种预测模型，其余脚本用于运行单个模型。
+Each experiment directory contains `engine.py`, `tool.py`, `run_all_models.py`, `run_LSTM.py`, `run_DLinear.py`, and `run_PatchTST.py`. The `engine.py` script handles training and evaluation, `tool.py` handles missing-value injection and imputation, and `run_all_models.py` runs the three forecasting models sequentially. The remaining scripts run individual models.
 
-## 环境安装
+## Installation
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-## 数据说明
+## Data
 
-数据文件不包含在本仓库中。
+Data files are not included in this repository.
 
-| 数据集 | 获取方式 | 放置位置 | 对应实验目录 |
+| Dataset | Access | Placement | Experiment Directory |
 |---|---|---|---|
 | ETTh1 | [ETDataset](https://github.com/zhouhaoyi/ETDataset) | `data_and_code/ETT*/ETTh1.csv` | `ETT*` |
 | KDD-Beijing | [KDD Cup 2018](https://www.kdd.org/kdd-cup/view/kdd-cup-2018) | `data_and_code/KDD-Beijing/kdd_beijing_raw.csv` | `KDD-Beijing` |
-| Weather | [Informer2020 数据目录](https://github.com/zhouhaoyi/Informer2020/tree/main/data/weather) | `data_and_code/weather/weather.csv` | `weather` |
-| SWaT | 向 [iTrust Labs](https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/) 申请 | `data_and_code/SWaT*/normal.csv` | `SWaT*` |
+| Weather | [Informer2020 data directory](https://github.com/zhouhaoyi/Informer2020/tree/main/data/weather) | `data_and_code/weather/weather.csv` | `weather` |
+| SWaT | Request access from [iTrust Labs](https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/) | `data_and_code/SWaT*/normal.csv` | `SWaT*` |
 
-SWaT 使用正常运行工况数据，按时间戳将数值特征降采样为一分钟均值，并保存为 `normal.csv`；时间戳、攻击标签和无意义索引列不作为输入特征。
+SWaT uses data from normal operating conditions. The numeric features are downsampled to one-minute means according to the timestamp and saved as `normal.csv`. Timestamps, attack labels, and non-informative index columns are not used as input features.
 
-## 运行实验
+## Running the Experiments
 
-主实验：
+Main experiments:
 
 ```bash
 python data_and_code/ETT/run_all_models.py
@@ -48,7 +48,7 @@ python data_and_code/weather/run_all_models.py
 python data_and_code/SWaT/run_all_models.py
 ```
 
-多种子实验：
+Multi-seed experiments:
 
 ```bash
 python data_and_code/ETT_seed123/run_all_models.py
@@ -57,24 +57,24 @@ python data_and_code/SWaT_seed123/run_all_models.py
 python data_and_code/SWaT_seed2026/run_all_models.py
 ```
 
-## 结果文件
+## Result Files
 
-实验脚本会在各自目录生成 `results_refactor_*.csv`，但结果 CSV 未包含在当前仓库中。汇总表 `tau_results.csv` 也未包含；`photo/plot_all_figures.py` 等绘图脚本读取 `D:/ei/result/seed42/tau_results.csv`，输出到 `D:/ei/mended_photo/`。
+The experiment scripts generate `results_refactor_*.csv` files in their respective directories, but the result CSV files are not included in this repository. The summary table `tau_results.csv` is also not included. Figure scripts such as `photo/plot_all_figures.py` read `D:/ei/result/seed42/tau_results.csv` and write output to `D:/ei/mended_photo/`.
 
-汇总表主要列：`dataset` 为数据集，`model` 为预测模型，`missing_mode` 为缺失机制，`missing_rate` 为缺失率，`pred_len` 为预测步长，`impute_method` 为插补方法，`ie_mae_*` 为插补误差，`fe_mae*` 为预测误差，`delta_ie`、`delta_fe` 为相对 Mean 基线的误差变化，`tau` 为传递效率，`tau_status` 表示 τ 是否有效。
+The main summary-table columns are: `dataset` for the dataset; `model` for the forecasting model; `missing_mode` for the missingness mechanism; `missing_rate` for the missing rate; `pred_len` for the forecasting horizon; `impute_method` for the imputation method; `ie_mae_*` for imputation error; `fe_mae*` for forecasting error; `delta_ie` and `delta_fe` for error changes relative to the Mean baseline; `tau` for transfer efficiency; and `tau_status` indicating whether `tau` is valid.
 
-本仓库不包含模型权重、训练断点、缓存文件和实验结果 CSV。
+This repository does not include model weights, training checkpoints, cache files, or experiment-result CSV files.
 
 ## License
 
-MIT License，见 `LICENSE`。
+MIT License. See `LICENSE`.
 
 ## Citation
 
-论文投稿中，录用后更新引用信息。
+The paper is under submission. Citation information will be updated after acceptance.
 
-Zenodo DOI：`[DOI 待填]`
+Zenodo DOI: `[DOI to be filled]`
 
 ## Contact
 
-`[邮箱待填]`
+`[Email address]`

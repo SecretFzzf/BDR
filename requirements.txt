@@ -1,0 +1,12 @@
+absl-py
+matplotlib
+numpy
+pandas
+pypots
+scikit-learn
+scipy
+seaborn
+statsmodels
+tensorboard
+torch
+tqdm

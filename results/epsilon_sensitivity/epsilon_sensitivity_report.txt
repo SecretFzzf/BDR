@@ -1,0 +1,17 @@
+ε Threshold Sensitivity Analysis Report
+============================================================
+
+Analysis basis: full volume 2304 unfiltered experimental samples
+
+different ε Key indicators under value：
+  ε = 0.001  | valid sample: 2220.0 (96.35%) | Culling ratio: 3.65% | pure inversion rate: 27.70% | Global inversion rate: 31.08%
+  ε = 0.005  | valid sample: 2112.0 (91.67%) | Culling ratio: 8.33% | pure inversion rate: 26.85% | Global inversion rate: 29.78%
+  ε = 0.01   | valid sample: 2064.0 (89.58%) | Culling ratio: 10.42% | pure inversion rate: 27.28% | Global inversion rate: 29.80%
+  ε = 0.02   | valid sample: 1968.0 (85.42%) | Culling ratio: 14.58% | pure inversion rate: 27.29% | Global inversion rate: 28.91%
+  ε = 0.05   | valid sample: 1812.0 (78.65%) | Culling ratio: 21.35% | pure inversion rate: 27.48% | Global inversion rate: 27.76%
+
+Key findings：
+
+1. The effective sample retention rate is from 96.4% down to 78.6%，The elimination ratio is from 3.6% rise to 21.4%。
+2. The pure inversion rate is ε ∈ [0.005, 0.05] Inside 26.8% ~ 27.5%，The fluctuation range is 0.9 percentage points。
+3. Performance inversion conclusion ε Threshold selection is insensitive。

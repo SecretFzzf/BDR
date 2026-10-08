@@ -1,0 +1,33 @@
+================================================================================
+          baseline anchor point (Baseline Anchor) Sensitivity analysis report
+================================================================================
+
+Data source: results/seed42/all_models_result.csv
+numerical stability threshold ε = 0.01
+
+--------------------------------------------------------------------------------
+index / Statistical items                                        Mean anchor point (Original paper)        Spline anchor point (New verification)
+--------------------------------------------------------------------------------
+Effectively assess sample size (N)                                             2,064                  2,148
+Total evaluation sample size (Contains denominator tending to zero)                                          2,304                  2,304
+Tau median                                                0.0399                 0.0349
+Tau interquartile range (IQR)                                         0.1528                 0.3391
+Tau mean (Reference, affected by heavy tails)                                     -0.6987                -1.5364
+pure inversion rate (%) (ΔIE<0 and ΔFE>0)                               27.28%                 12.94%
+full inversion rate (%) (τ < 0)                                       29.80%                 40.41%
+Sample proportion close to zero (|ΔIE|<0.01)                                  10.42%                  6.77%
+--------------------------------------------------------------------------------
+
+Conclusion verification：
+1. switch to Spline after anchor point，Tau Is the median still close to zero?: [yes]  (Spline τ median = 0.0349)
+2. Is the inversion phenomenon still evident?: [yes]  (Spline pure inversion rate = 12.94%)
+
+Robustness Judgment：
+  - Tau Median change: -0.0050  (Decrease, relative change 12.5%)
+  - Pure inversion rate change: -14.33 pp
+
+  => The core conclusion is robust: regardless of Mean still Spline as anchor point，
+    τ The medians are all close to zero, and the pure inversion rates are all above 10%，
+    'Weak conduction'and'Performance inversion is common'The conclusion does not depend on the baseline selection。
+
+================================================================================
